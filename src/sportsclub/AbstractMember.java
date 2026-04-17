@@ -36,7 +36,11 @@ public abstract class AbstractMember implements Comparable<AbstractMember> {
      * true ist, soll die Ausgabe aufsteigend sortiert, ansonsten absteigend sortiert erfolgen. Die
      * */
     public String toString(boolean ascending) {
-        return name + " | + " + getIncome() + " | - " + getCosts() + " | total + " + getSurplus();
+        StringBuilder s = new StringBuilder();
+        if (this instanceof Section) s.append("\n");
+        if (!(this instanceof Section)) s.append("   ");
+        s.append(name + " | + " + getIncome() + " | - " + getCosts() + " | total " + getSurplus() + "\n");
+        return s.toString();
     }
 
     /** Default-Methode String toString() soll eine Ausgabe in aufsteigender Reihenfolge erzeugen.
@@ -47,7 +51,8 @@ public abstract class AbstractMember implements Comparable<AbstractMember> {
     }
 
     public int compareTo(AbstractMember o) {
-        if (o != null) {
+        if (o == null) throw new NullPointerException("Cannot compare to null"); // help from Claude
+        else {
             String thisName = this.name.toLowerCase();
             String otherName = o.name.toLowerCase(); // if we compare lowercase 'a' and uppercase 'A' it would not be equal
             int minLength = Math.min(this.name.length(), o.name.length());
@@ -60,9 +65,6 @@ public abstract class AbstractMember implements Comparable<AbstractMember> {
 
             return Integer.compare(thisName.length(), otherName.length());
         }
-        // equal lengths with same chars → 0
-        // one is prefix of other → shorter comes first
-        return Integer.MIN_VALUE; // better: exception
     }
 
 }

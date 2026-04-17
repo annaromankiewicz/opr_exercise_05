@@ -1,5 +1,8 @@
 package sportsclub;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SectionTest {
@@ -9,7 +12,7 @@ class SectionTest {
     Section footballU20 = new Section("U20");
     Section sectionEmpty = new Section("Volleyball");
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     void setUp() {
         // ActiveMembers as AbstractMember
         AbstractMember trainer = new Trainer("Anna", 10);
@@ -35,7 +38,7 @@ class SectionTest {
         footballU20.addMember(amateurAthlete3);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testMethods() {
         Trainer alice = new Trainer("Alice", 5);
         assertEquals(120, alice.getIncome());
@@ -44,7 +47,7 @@ class SectionTest {
     }
 
 
-    @org.junit.jupiter.api.Test
+    @Test
     void insertMemberActive() {
         AbstractMember topAthlete1 = new TopAthlete("Luise", 5);
         AbstractMember topAthlete2 = new TopAthlete("Judith", 6);
@@ -72,8 +75,7 @@ class SectionTest {
     }
 
 
-
-    @org.junit.jupiter.api.Test
+    @Test
     void removeMember() {
         AbstractMember trainer = new Trainer("Anna", 10);
         AbstractMember amateurAthlete1 = new AmateurAthlete("Julia", 2);
@@ -85,12 +87,12 @@ class SectionTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isMemberEmptySection() {
-        assertFalse(sportUnion.isMember(new TopAthlete("Laura",3)));
+        assertFalse(sportUnion.isMember(new TopAthlete("Laura", 3)));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isMemberPerson() {
         AbstractMember topAthlete1 = new TopAthlete("Luise", 5);
         AbstractMember topAthlete2 = new TopAthlete("Judith", 6);
@@ -104,7 +106,7 @@ class SectionTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isMemberPersonSection() {
         assertFalse(sportUnion.isMember(footballU20));
         assertTrue(sportUnion.addMember(footballU20));
@@ -116,7 +118,7 @@ class SectionTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void compareTo() {
         AbstractMember topAthlete3 = new TopAthlete("Jo", 7);
         AbstractMember topAthlete4 = new TopAthlete("Josef", 8);
@@ -126,25 +128,49 @@ class SectionTest {
         assertEquals(0, topAthlete4.compareTo(topAthlete5));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getIncome() {
         assertEquals(1020, footballU20.getIncome());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getCosts() {
         assertEquals(5070, footballU20.getCosts());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getSurplus() {
         assertEquals(-4050, footballU20.getSurplus());
     }
 
-//    @org.junit.jupiter.api.Test
-//    void testToString() {
-//        System.out.print(footballU20.toString(true));
-//    }
+
+    @Test
+    void testToStringMembers() {
+        AbstractMember topAthlete1 = new TopAthlete("Luise", 5);
+        AbstractMember topAthlete2 = new TopAthlete("Judith", 6);
+        System.out.print(topAthlete1.toString());
+    }
+
+    @Test
+    void compareToObjectNull() {
+        AbstractMember topAthlete1 = new TopAthlete("Luise", 5);
+        AbstractMember topAthlete2 = null;
+
+        assertThrows(NullPointerException.class, () -> {
+            topAthlete1.compareTo(topAthlete2);
+        });
+    }
+
+    @Test
+    void testToStringSection() {
+        System.out.print(footballU20.toString(true));
+    }
+
+    @Test
+    void testToStringSectionOfSection() {
+        footballClub.addMember(footballU20);
+        System.out.print(footballClub.toString(true));
+    }
 
 
 }

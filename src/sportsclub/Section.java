@@ -29,10 +29,16 @@ public class Section extends AbstractMember {
         return sum;
     }
 
-
-//    String toString(boolean ascending) {
-//        return section.toString();
-//    }
+    @Override
+    public String toString(boolean ascending) {
+        StringBuilder s = new StringBuilder();
+        AbstractMember[] sectionArray = section.toArray(new AbstractMember[section.size()], true); // I changed the signature of toArray in BST to avoid a typecast
+        s.append(super.toString(true)); // Section Name
+        for (AbstractMember member: sectionArray) {
+            s.append(member.toString(true));
+        }
+        return s.toString();
+    }
 
     boolean addMember(AbstractMember m) {
         return section.insert(m);
