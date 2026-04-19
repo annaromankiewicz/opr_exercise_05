@@ -36,12 +36,9 @@ public abstract class AbstractMember implements Comparable<AbstractMember> {
      * true ist, soll die Ausgabe aufsteigend sortiert, ansonsten absteigend sortiert erfolgen. Die
      * */
     public String toString(boolean ascending) {
-        StringBuilder s = new StringBuilder();
-        if (this instanceof Section) s.append("\n");
-        if (!(this instanceof Section)) s.append("   ");
-        s.append(name + " | + " + getIncome() + " | - " + getCosts() + " | total " + getSurplus() + "\n");
-        return s.toString();
+        return name + " | + " + getIncome() + " | - " + getCosts() + " | total " + getSurplus() + "\n";
     }
+
 
     /** Default-Methode String toString() soll eine Ausgabe in aufsteigender Reihenfolge erzeugen.
      * */

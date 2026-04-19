@@ -39,11 +39,155 @@ class SectionTest {
     }
 
     @Test
-    void testMethods() {
+    void testGetIncome() {
+        // Trainer
         Trainer alice = new Trainer("Alice", 5);
         assertEquals(120, alice.getIncome());
+
+        // TopAthlete
+        TopAthlete max = new TopAthlete("Max", 5);
+        assertEquals(120, max.getIncome());
+
+        // AmateurAthlete
+        AmateurAthlete lisa = new AmateurAthlete("Lisa", 4);
+        assertEquals(300, lisa.getIncome());
+
+        // SupportingMember
+        SupportingMember bob = new SupportingMember("Bob");
+        assertEquals(100, bob.getIncome());
+
+        // HonoraryMember
+        HonoraryMember karl = new HonoraryMember("Karl");
+        assertEquals(0, karl.getIncome());
+
+        // ChairMember
+        ChairMember eva = new ChairMember("Eva", 9);
+        assertEquals(900, eva.getIncome());
+
+        // Section
+        assertEquals(1020, footballU20.getIncome());
+
+        // Empty Section
+        assertEquals(0, sectionEmpty.getIncome());
+    }
+
+    @Test
+    void testGetCosts() {
+        // Trainer
+        Trainer alice = new Trainer("Alice", 5);
         assertEquals(2400, alice.getCosts());
+
+        // TopAthlete
+        TopAthlete max = new TopAthlete("Max", 5);
+        assertEquals(300, max.getCosts());
+
+        // AmateurAthlete
+        AmateurAthlete lisa = new AmateurAthlete("Lisa", 4);
+        assertEquals(120, lisa.getCosts());
+
+        // SupportingMember
+        SupportingMember bob = new SupportingMember("Bob");
+        assertEquals(15, bob.getCosts());
+
+        // HonoraryMember
+        HonoraryMember karl = new HonoraryMember("Karl");
+        assertEquals(20, karl.getCosts());
+
+        // ChairMember
+        ChairMember eva = new ChairMember("Eva", 9);
+        assertEquals(180, eva.getCosts());
+
+        // Section
+        assertEquals(5070, footballU20.getCosts());
+
+        // Empty Section
+        assertEquals(0, sectionEmpty.getCosts());
+
+        // Boundary: min activity
+        Trainer tMin = new Trainer("Min", 0);
+        assertEquals(0, tMin.getCosts());
+
+        // Boundary: max activity
+        Trainer tMax = new Trainer("Max", 10);
+        assertEquals(4800, tMax.getCosts());
+    }
+
+    @Test
+    void testGetSurplus() {
+        // Trainer
+        Trainer alice = new Trainer("Alice", 5);
         assertEquals(-2280, alice.getSurplus());
+
+        // TopAthlete
+        TopAthlete max = new TopAthlete("Max", 5);
+        assertEquals(-180, max.getSurplus());
+
+        // AmateurAthlete
+        AmateurAthlete lisa = new AmateurAthlete("Lisa", 4);
+        assertEquals(180, lisa.getSurplus());
+
+        // SupportingMember
+        SupportingMember bob = new SupportingMember("Bob");
+        assertEquals(85, bob.getSurplus());
+
+        // HonoraryMember
+        HonoraryMember karl = new HonoraryMember("Karl");
+        assertEquals(-20, karl.getSurplus());
+
+        // ChairMember
+        ChairMember eva = new ChairMember("Eva", 9);
+        assertEquals(720, eva.getSurplus());
+
+        // Section
+        assertEquals(-4050, footballU20.getSurplus());
+
+        // Empty Section
+        assertEquals(0, sectionEmpty.getSurplus());
+    }
+
+    @Test
+    void activityLevelBoundaries() {
+        Trainer tMin = new Trainer("Min", 0);
+        assertEquals(0, tMin.getCosts());
+
+        Trainer tMax = new Trainer("Max", 10);
+        assertEquals(4800, tMax.getCosts());
+    }
+
+    @Test
+    void activityLevelInvalid() {
+        // Negative activity level
+        assertThrows(IllegalArgumentException.class,
+                () -> new Trainer("Neg", -1));          // help of AI
+
+        // Over maximum activity level
+        assertThrows(IllegalArgumentException.class,
+                () -> new Trainer("Over", 11));
+    }
+
+    @Test
+    void competenceLevelInvalid() {
+        // Negative activity level
+        assertThrows(IllegalArgumentException.class,
+                () -> new ChairMember("Neg", -1));          // help of AI
+
+        // Over maximum activity level
+        assertThrows(IllegalArgumentException.class,
+                () -> new ChairMember("Over", 11));
+    }
+
+
+    @Test
+    void compareToSameNameDifferentCase() {
+        AbstractMember m1 = new TopAthlete("anna", 5);
+        AbstractMember m2 = new TopAthlete("Anna", 5);
+        assertEquals(0, m1.compareTo(m2));
+    }
+
+    @Test
+    void compareToSelf() {
+        AbstractMember m1 = new TopAthlete("Luise", 5);
+        assertEquals(0, m1.compareTo(m1));
     }
 
 
@@ -74,6 +218,11 @@ class SectionTest {
         assertFalse(footballClub.addMember(topAthlete6dup));
     }
 
+    @Test
+    void removeEmpty() {
+        assertFalse(sectionEmpty.removeMember(new TopAthlete("Paul", 10)));
+    }
+
 
     @Test
     void removeMember() {
@@ -85,11 +234,31 @@ class SectionTest {
         assertTrue(footballU20.removeMember(trainer));
         assertFalse(footballU20.isMember(trainer));
 
+        assertTrue(footballU20.isMember(amateurAthlete1));
+        assertTrue(footballU20.removeMember(amateurAthlete1));
+        assertFalse(footballU20.isMember(amateurAthlete1));
+
+        assertTrue(footballU20.isMember(amateurAthlete2));
+        assertTrue(footballU20.removeMember(amateurAthlete2));
+        assertFalse(footballU20.isMember(amateurAthlete2));
+
     }
 
     @Test
+    void removeSection() {
+     sportUnion.addMember(footballClub);
+
+        assertTrue(sportUnion.isMember(footballClub));
+        assertTrue(sportUnion.removeMember(footballClub));
+        assertFalse(sportUnion.isMember(footballClub));
+
+    }
+
+
+
+    @Test
     void isMemberEmptySection() {
-        assertFalse(sportUnion.isMember(new TopAthlete("Laura", 3)));
+        assertFalse(sectionEmpty.isMember(new TopAthlete("Laura", 3)));
     }
 
     @Test
@@ -107,7 +276,7 @@ class SectionTest {
     }
 
     @Test
-    void isMemberPersonSection() {
+    void isMemberSection() {
         assertFalse(sportUnion.isMember(footballU20));
         assertTrue(sportUnion.addMember(footballU20));
         assertTrue(sportUnion.isMember(footballU20));
@@ -149,6 +318,7 @@ class SectionTest {
         AbstractMember topAthlete1 = new TopAthlete("Luise", 5);
         AbstractMember topAthlete2 = new TopAthlete("Judith", 6);
         System.out.print(topAthlete1.toString());
+        System.out.print(topAthlete2.toString());
     }
 
     @Test
@@ -168,8 +338,20 @@ class SectionTest {
 
     @Test
     void testToStringSectionOfSection() {
+        sportUnion.addMember(footballClub);
         footballClub.addMember(footballU20);
-        System.out.print(footballClub.toString(true));
+
+        System.out.print("-------------" + "A-Z" + "-------------\n");
+
+        System.out.print(sportUnion.toString(true));
+
+        System.out.print("-------------" + "A-Z" + "-------------\n");
+
+        System.out.print(sportUnion.toString());
+
+
+        System.out.print("-------------" + "Z-A" + "-------------\n");
+        System.out.print(sportUnion.toString(false));
     }
 
 

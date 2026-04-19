@@ -11,30 +11,18 @@ public class TopAthlete extends ActiveMember {
 //    o Spitzensportler (Klasse TopAthlete): Monatlicher Beitrag: €10,-, Ausgaben in € pro
 //    Monat: Aktivitätsgrad * 5
 
-//    @Override
-//    double getIncome() {
-//        return 12*10;
-//    }
 
     @Override
     protected double getMonthlyIncome() {
         return 10;
     }
 
-//    @Override
-//    double getCosts() {
-//        return 12* activityLevel * 5;
-//    }
 
     @Override
     protected double getMonthlyCosts() {
         return activityLevel * 5;
     }
 
-//    @Override
-//    String toString(boolean ascending) {
-//        return "";
-//    }
 
 }
 

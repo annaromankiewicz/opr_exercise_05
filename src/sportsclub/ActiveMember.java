@@ -15,7 +15,9 @@ abstract public class ActiveMember extends AbstractMember {
 
     protected ActiveMember(String name, int activityLevel) {
         super(name);
-        if (activityLevel >= 0 && activityLevel <= 10) {
+        if (activityLevel < 0 || activityLevel > 10) {        // invalid activity levels should not be ignored silently - help of AI, but it was my design decision
+            throw new IllegalArgumentException("Activity level must be between 0 and 10");
+        } else {
             this.activityLevel = activityLevel;
         }
     }

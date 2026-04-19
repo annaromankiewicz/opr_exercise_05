@@ -13,30 +13,18 @@ public class AmateurAthlete extends ActiveMember {
 //    o Trainer (Klasse Trainer): Monatlicher Beitrag: €10,- Ausgaben in € pro Monat:
 //    Aktivitätsgrad * 40
 
-//    @Override
-//    double getIncome() {
-//        return 12*25;
-//    }
 
     @Override
     protected double getMonthlyIncome() {
         return 25;
     }
 
-//    @Override
-//    double getCosts() {
-//        return 12*activityLevel * 2.5;
-//    }
 
     @Override
     protected double getMonthlyCosts() {
         return activityLevel * 2.5;
     }
 
-//    @Override
-//    String toString(boolean ascending) {
-//        return "";
-//    }
 
 }
 

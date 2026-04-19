@@ -16,19 +16,5 @@ public class HonoraryMember extends AbstractMember {
         return 20;
     }
 
-//    @Override
-//    double getSurplus() {
-//        return getIncome()-getCosts();
-//    }
-
-//    @Override
-//    String toString(boolean ascending) {
-//        return "";
-//    }
-
-//    @Override
-//    public int compareTo(AbstractMember o) {
-//       return 0;
-//    }
 }
 

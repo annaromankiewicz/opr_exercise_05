@@ -11,31 +11,18 @@ public class Trainer extends ActiveMember {
 //    o Trainer (Klasse Trainer): Monatlicher Beitrag: €10,- Ausgaben in € pro Monat:
 //    Aktivitätsgrad * 40
 
-//    @Override
-//    double getIncome() {
-//        return 12* 10;
-//    }
 
     @Override
     protected double getMonthlyIncome() {
         return 10;
     }
 
-//    @Override
-//    double getCosts() {
-//        return 12*activityLevel * 40;
-//    }
 
     @Override
     protected double getMonthlyCosts() {
         return activityLevel * 40;
     }
 
-
-//    @Override
-//    String toString(boolean ascending) {
-//        return "";
-//    }
 
 }
 
